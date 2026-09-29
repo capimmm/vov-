@@ -25,6 +25,11 @@
     align-items: center;
     justify-content: center;
     background-color: #000;
+    /* Fundo usando o arquivo fundo.jpg com overlay escuro para manter o estilo Apple */
+    background-image: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.85)), url('fundo.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
     overflow: hidden;
     position: relative;
     perspective: 1200px;
@@ -48,7 +53,6 @@
     50% { transform: translate(-50%, -50%) scale(1.15); opacity: 1; }
   }
 
-  /* Wrapper para permitir o flip 3D sem quebrar o glass */
   .card-wrapper {
     position: relative;
     z-index: 1;
@@ -132,38 +136,19 @@
     50% { opacity: 0.4; }
   }
 
-  /* ==============================
-     ANIMAÇÃO DE SAÍDA (pré-reveal)
-     ============================== */
+  /* ANIMAÇÃO DE SAÍDA */
   .card.opening {
     animation: cardOpen 0.8s cubic-bezier(0.6, 0, 0.4, 1) forwards;
   }
 
   @keyframes cardOpen {
-    0% {
-      transform: scale(1) rotateY(0deg);
-      filter: blur(0) brightness(1);
-      opacity: 1;
-    }
-    30% {
-      transform: scale(0.9) rotateY(-20deg);
-      filter: blur(0) brightness(1.5);
-    }
-    60% {
-      transform: scale(0.4) rotateY(180deg);
-      filter: blur(4px) brightness(2);
-      opacity: 0.7;
-    }
-    100% {
-      transform: scale(0) rotateY(360deg);
-      filter: blur(10px) brightness(3);
-      opacity: 0;
-    }
+    0% { transform: scale(1) rotateY(0deg); filter: blur(0) brightness(1); opacity: 1; }
+    30% { transform: scale(0.9) rotateY(-20deg); filter: blur(0) brightness(1.5); }
+    60% { transform: scale(0.4) rotateY(180deg); filter: blur(4px) brightness(2); opacity: 0.7; }
+    100% { transform: scale(0) rotateY(360deg); filter: blur(10px) brightness(3); opacity: 0; }
   }
 
-  /* ==============================
-     ESTADO REVELADO
-     ============================== */
+  /* ESTADO REVELADO */
   .card.revealed {
     padding: 0;
     cursor: default;
@@ -176,26 +161,13 @@
   }
 
   @keyframes revealBounce {
-    0% {
-      transform: scale(0.3) rotateY(-180deg);
-      opacity: 0;
-    }
-    60% {
-      transform: scale(1.08) rotateY(10deg);
-      opacity: 1;
-    }
-    80% {
-      transform: scale(0.97) rotateY(-3deg);
-    }
-    100% {
-      transform: scale(1) rotateY(0deg);
-      opacity: 1;
-    }
+    0% { transform: scale(0.3) rotateY(-180deg); opacity: 0; }
+    60% { transform: scale(1.08) rotateY(10deg); opacity: 1; }
+    80% { transform: scale(0.97) rotateY(-3deg); }
+    100% { transform: scale(1) rotateY(0deg); opacity: 1; }
   }
 
-  .card.revealed .content {
-    display: none;
-  }
+  .card.revealed .content { display: none; }
 
   .reveal-content {
     display: none;
@@ -204,9 +176,7 @@
     overflow: hidden;
   }
 
-  .card.revealed .reveal-content {
-    display: block;
-  }
+  .card.revealed .reveal-content { display: block; }
 
   .reveal-content img {
     width: 100%;
@@ -214,22 +184,11 @@
     border-radius: 32px;
   }
 
-  /* Brilho varrendo a imagem */
   .reveal-content::after {
     content: '';
     position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-      120deg,
-      transparent 0%,
-      transparent 40%,
-      rgba(255, 255, 255, 0.5) 50%,
-      transparent 60%,
-      transparent 100%
-    );
+    top: 0; left: -100%; width: 100%; height: 100%;
+    background: linear-gradient(120deg, transparent 0%, transparent 40%, rgba(255, 255, 255, 0.5) 50%, transparent 60%, transparent 100%);
     pointer-events: none;
   }
 
@@ -266,15 +225,10 @@
   }
 
   @keyframes captionIn {
-    to {
-      opacity: 1;
-      transform: translateX(-50%) translateY(0);
-    }
+    to { opacity: 1; transform: translateX(-50%) translateY(0); }
   }
 
-  /* ==============================
-     FLASH DE LUZ
-     ============================== */
+  /* FLASH */
   .flash {
     position: fixed;
     inset: 0;
@@ -284,9 +238,7 @@
     pointer-events: none;
   }
 
-  .flash.active {
-    animation: flashAnim 0.7s ease-out;
-  }
+  .flash.active { animation: flashAnim 0.7s ease-out; }
 
   @keyframes flashAnim {
     0% { opacity: 0; }
@@ -294,9 +246,7 @@
     100% { opacity: 0; }
   }
 
-  /* ==============================
-     PARTÍCULAS
-     ============================== */
+  /* PARTÍCULAS */
   .particles {
     position: fixed;
     inset: 0;
@@ -311,11 +261,9 @@
     height: 8px;
     border-radius: 50%;
     background: var(--apple-blue);
-    box-shadow: 0 0 12px rgba(10, 132, 255, 0.9),
-                0 0 20px rgba(10, 132, 255, 0.5);
+    box-shadow: 0 0 12px rgba(10, 132, 255, 0.9), 0 0 20px rgba(10, 132, 255, 0.5);
     opacity: 0;
-    top: 50%;
-    left: 50%;
+    top: 50%; left: 50%;
     transform: translate(-50%, -50%);
   }
 
@@ -324,16 +272,9 @@
   }
 
   @keyframes particleBurst {
-    0% {
-      opacity: 1;
-      transform: translate(-50%, -50%) scale(0.5);
-    }
-    100% {
-      opacity: 0;
-      transform: translate(calc(-50% + var(--x)), calc(-50% + var(--y))) scale(0);
-    }
+    0% { opacity: 1; transform: translate(-50%, -50%) scale(0.5); }
+    100% { opacity: 0; transform: translate(calc(-50% + var(--x)), calc(-50% + var(--y))) scale(0); }
   }
-
 </style>
 </head>
 <body>
@@ -345,16 +286,18 @@
 <div class="card-wrapper">
   <div class="card" id="card">
     <div class="content">
-      <!-- ⚠️ SUBSTITUA O SRC PELAS SUAS IMAGENS -->
+      
+      <!-- ⚠️ SE O NAVEGADOR NÃO CARREGAR O "?.jpg", RENOMEIE O ARQUIVO PARA "question.jpg" E MUDE AQUI -->
       <img 
-        src="https://img.icons8.com/fluency/512/question-mark.png" 
+        src="?.jpg" 
         alt="Dúvida" 
         class="icon-question"
         id="imgQuestion"
       >
       
+      <!-- Botão Start -->
       <img 
-        src="https://img.icons8.com/fluency/512/start.png" 
+        src="button.jpg" 
         alt="Start" 
         class="icon-start"
         id="imgStart"
@@ -364,8 +307,9 @@
     </div>
 
     <div class="reveal-content">
+      <!-- Imagem Revelada -->
       <img
-        src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800&q=80"
+        src="imagen.png"
         alt="Imagem revelada"
         id="revealedImage"
       >
@@ -378,24 +322,14 @@
   const card = document.getElementById('card');
   const flash = document.getElementById('flash');
   const particlesContainer = document.getElementById('particles');
-  const revealedImage = document.getElementById('revealedImage');
 
-  // ⚠️ COLOQUE AQUI A IMAGEM QUE SERÁ REVELADA
-  const IMAGE_URL = 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800&q=80';
-  revealedImage.src = IMAGE_URL;
-
-  // ⚠️ SEUS ARQUIVOS LOCAIS (descomente e ajuste se necessário):
-  // document.getElementById('imgQuestion').src = 'ponto.png';
-  // document.getElementById('imgStart').src = 'start.png';
-
-  // ---------- Função para criar explosão de partículas ----------
+  // Criação das partículas
   function createParticles() {
     const count = 40;
     for (let i = 0; i < count; i++) {
       const p = document.createElement('div');
       p.classList.add('particle');
 
-      // Direção aleatória
       const angle = (Math.PI * 2 * i) / count + Math.random() * 0.5;
       const distance = 150 + Math.random() * 250;
       const x = Math.cos(angle) * distance;
@@ -404,45 +338,32 @@
       p.style.setProperty('--x', `${x}px`);
       p.style.setProperty('--y', `${y}px`);
 
-      // Tamanhos variados
       const size = 4 + Math.random() * 8;
       p.style.width = size + 'px';
       p.style.height = size + 'px';
-
-      // Atraso aleatório curto
       p.style.animationDelay = (Math.random() * 0.15) + 's';
 
       particlesContainer.appendChild(p);
-
-      // Ativa a animação
-      requestAnimationFrame(() => {
-        p.classList.add('go');
-      });
-
-      // Remove depois da animação
+      requestAnimationFrame(() => p.classList.add('go'));
       setTimeout(() => p.remove(), 1400);
     }
   }
 
-  // ---------- Clique no card ----------
+  // Evento de clique
   card.addEventListener('click', () => {
     if (card.classList.contains('revealed') || card.classList.contains('opening')) return;
 
-    // 1. Efeito de abertura (flip 3D + blur)
     card.classList.add('opening');
 
-    // 2. Flash de luz
     setTimeout(() => {
       flash.classList.add('active');
       setTimeout(() => flash.classList.remove('active'), 700);
     }, 400);
 
-    // 3. Explosão de partículas
     setTimeout(() => {
       createParticles();
     }, 500);
 
-    // 4. Revela a imagem com bounce
     setTimeout(() => {
       card.classList.remove('opening');
       card.classList.add('revealed');
